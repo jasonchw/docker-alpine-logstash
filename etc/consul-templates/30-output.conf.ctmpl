@@ -1,0 +1,6 @@
+output {
+    elasticsearch { 
+        {{ $esurl := env "ELASTICSEARCH_URL" }}{{ if ne $esurl "" }}hosts => ["{{ $esurl }}"]{{ else }}hosts => ["elasticsearch:9200"]{{ end }}
+    }
+}
+
