@@ -24,8 +24,9 @@ COPY etc/consul.d/logstash.json                /etc/consul.d/
 COPY etc/consul-templates/30-output.conf.ctmpl /etc/consul-templates/30-output.conf.ctmpl
 
 # certificate
-COPY ./fqdn-log.example.org.crt /etc/pki/tls/certs/fqdn-log.example.org.crt
-COPY ./fqdn-log.example.org.key /etc/pki/tls/private/fqdn-log.example.org.key
+COPY ./fqdn-log.example.org.crt   /etc/pki/tls/certs/fqdn-log.example.org.crt
+COPY ./fqdn-log.example.org.key   /etc/pki/tls/private/fqdn-log.example.org.key
+COPY ./fqdn-log.example.org.pkcs8 /etc/pki/tls/private/fqdn-log.example.org.pkcs8
 
 # filters
 COPY etc/logstash/conf.d/ /etc/logstash/conf.d/
