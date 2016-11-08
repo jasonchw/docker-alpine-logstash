@@ -1,4 +1,4 @@
-FROM jasonchw/alpine-consul
+FROM jasonchw/alpine-consul:0.7.0
 
 ARG JAVA_ALPINE_VERSION=8.92.14-r1
 ARG LOGSTASH_VER=2.4.0
