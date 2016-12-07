@@ -1,10 +1,15 @@
 FROM jasonchw/alpine-consul:0.7.0
 
-ARG JAVA_ALPINE_VERSION=8.92.14-r1
+ARG JAVA_ALPINE_VERSION=8.111.14-r0
 ARG LOGSTASH_VER=2.4.0
 ARG LOGSTASH_URL=https://download.elastic.co/logstash/logstash
 
-ENV LANG=C.UTF-8 
+ENV LANG=C.UTF-8 \
+    TWITTER_CONSUMER_KEY="consumer_key" \
+    TWITTER_CONSUMER_SECRET="consumer_secret" \
+    TWITTER_OAUTH_TOKEN="oauth_token" \
+    TWITTER_OAUTH_TOKEN_SECRET="oauth_token_secret" \
+    TWITTER_FOLLOWS="follows"
 
 RUN apk update && apk upgrade && \
     apk add openjdk8-jre="$JAVA_ALPINE_VERSION" && \
@@ -30,12 +35,6 @@ COPY ./fqdn-log.example.org.pkcs8 /etc/pki/tls/private/fqdn-log.example.org.pkcs
 
 # filters
 COPY etc/logstash/conf.d/ /etc/logstash/conf.d/
-#COPY ./01-input-lumberjack.conf      /etc/logstash/conf.d/01-input-lumberjack.conf
-#COPY ./02-input-beats.conf           /etc/logstash/conf.d/02-input-beats.conf
-#COPY ./15-filter-log4j-standard.conf /etc/logstash/conf.d/15-filter-log4j-standard.conf
-#COPY ./16-filter-log4j-legacy.conf   /etc/logstash/conf.d/16-filter-log4j-legacy.conf
-#COPY ./19-filter-drupal.conf         /etc/logstash/conf.d/19-filter-drupal.conf
-#COPY ./30-output.conf                /etc/logstash/conf.d/30-output.conf
 
 # logrotate
 COPY ./logstash-logrotate /etc/logrotate.d/logstash
