@@ -34,7 +34,7 @@ COPY ./fqdn-log.example.org.key   /etc/pki/tls/private/fqdn-log.example.org.key
 COPY ./fqdn-log.example.org.pkcs8 /etc/pki/tls/private/fqdn-log.example.org.pkcs8
 
 # filters
-COPY etc/logstash/conf.d/ /etc/logstash/conf.d/
+#COPY etc/logstash/conf.d/ /etc/logstash/conf.d/
 
 # logrotate
 COPY ./logstash-logrotate /etc/logrotate.d/logstash
