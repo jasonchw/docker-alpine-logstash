@@ -1,7 +1,7 @@
 FROM jasonchw/alpine-consul:0.7.0
 
-ARG JAVA_ALPINE_VERSION=8.92.14-r1
-ARG LOGSTASH_VER=2.4.0
+ARG JAVA_ALPINE_VERSION=8.111.14-r0
+ARG LOGSTASH_VER=2.4.1
 ARG LOGSTASH_URL=https://download.elastic.co/logstash/logstash
 
 ENV LANG=C.UTF-8 
@@ -15,27 +15,9 @@ RUN apk update && apk upgrade && \
     rm /etc/consul.d/consul-ui.json && \
     addgroup logstash && \
     adduser -S -G logstash logstash && \
-    mkdir -p /var/log/logstash/ && \
-    mkdir -p /etc/logstash/conf.d/ && \
-    mkdir -p /etc/pki/tls/certs/ && \
-    mkdir -p /etc/pki/tls/private/
+    mkdir -p /var/log/logstash/ 
 
 COPY etc/consul.d/logstash.json                /etc/consul.d/
-COPY etc/consul-templates/30-output.conf.ctmpl /etc/consul-templates/30-output.conf.ctmpl
-
-# certificate
-COPY ./fqdn-log.example.org.crt   /etc/pki/tls/certs/fqdn-log.example.org.crt
-COPY ./fqdn-log.example.org.key   /etc/pki/tls/private/fqdn-log.example.org.key
-COPY ./fqdn-log.example.org.pkcs8 /etc/pki/tls/private/fqdn-log.example.org.pkcs8
-
-# filters
-COPY etc/logstash/conf.d/ /etc/logstash/conf.d/
-#COPY ./01-input-lumberjack.conf      /etc/logstash/conf.d/01-input-lumberjack.conf
-#COPY ./02-input-beats.conf           /etc/logstash/conf.d/02-input-beats.conf
-#COPY ./15-filter-log4j-standard.conf /etc/logstash/conf.d/15-filter-log4j-standard.conf
-#COPY ./16-filter-log4j-legacy.conf   /etc/logstash/conf.d/16-filter-log4j-legacy.conf
-#COPY ./19-filter-drupal.conf         /etc/logstash/conf.d/19-filter-drupal.conf
-#COPY ./30-output.conf                /etc/logstash/conf.d/30-output.conf
 
 # logrotate
 COPY ./logstash-logrotate /etc/logrotate.d/logstash
